@@ -40,6 +40,7 @@ router.post(
           .trim()
           .isLength({min: 5}),
     ],
+    authController.postLogin
 );
 
 module.exports = router;

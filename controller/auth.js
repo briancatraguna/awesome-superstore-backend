@@ -24,7 +24,10 @@ exports.postSignUp = async (req, res, next) => {
         });
     }
 
-    const custId = await CustomerAccessor.insert(name, segment, email, password)
+    const saltRounds = 12;
+    const hashedPassword = await bcrypt.hash(password, saltRounds)
+
+    const custId = await CustomerAccessor.insert(name, segment, email, hashedPassword)
     return res.status(200).json({
         message: "User registered successfully.",
         customer_id: custId

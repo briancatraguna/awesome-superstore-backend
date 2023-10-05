@@ -2,26 +2,25 @@ const db = require('../database/database');
 
 class CustomerAccessor {
 
-  static async upsert(name, segment, email, password) {
+  static async insert(name, segment, email, password) {
     const queryStr = 'CALL USP_UpsertCustomer(?,?,?,?)';
-    const result = await db.query(queryStr, [
+    const [result] = await db.query(queryStr, [
       name,
       segment,
       email,
       password
     ]);
-    console.log(result);
-    return result;
+    return result[0][0].cust_id;
   }
 
-  static findOneById(customerId) {
+  static async findOneById(customerId) {
     if (customer.length === 0) return;
-    return db.execute('CALL USP_GetCustomerById(?)',[customerId]);
+    return await db.execute('CALL USP_GetCustomerById(?)',[customerId]);
   }
 
-  static findOneByEmail(email) {
+  static async findOneByEmail(email) {
     if (email.length === 0) return;
-    return db.execute('CALL USP_GetCustomerByEmail(?)',[email])
+    return await db.execute('CALL USP_GetCustomerByEmail(?)',[email])
   }
 
 }

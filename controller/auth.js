@@ -17,6 +17,9 @@ exports.postSignUp = async (req, res, next) => {
     const email = req.body.email;
     const password = req.body.password;
 
-    await CustomerAccessor.upsert(name, segment, email, password)
-    return res.status(200);
+    const custId = await CustomerAccessor.insert(name, segment, email, password)
+    return res.status(200).json({
+        message: "User registered successfully.",
+        customer_id: custId
+    });
 }

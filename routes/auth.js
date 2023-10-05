@@ -1,6 +1,8 @@
 const express = require('express');
 const {body} = require('express-validator');
 
+const authController = require('../controller/auth');
+
 const router = express.Router();
 
 router.post(
@@ -24,10 +26,11 @@ router.post(
           .isLength({min: 5})
           .withMessage('Weak password'),
     ],
+    authController.postSignUp
 );
 
 router.post(
-    'login',
+    '/login',
     [
       body('email')
           .trim()

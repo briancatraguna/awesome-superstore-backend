@@ -14,13 +14,15 @@ class CustomerAccessor {
   }
 
   static async findOneById(customerId) {
-    if (customer.length === 0) return;
-    return await db.execute('CALL USP_GetCustomerById(?)',[customerId]);
+    const [result] = await db.execute('CALL USP_GetCustomerById(?)',[customerId]);
+    if (result[0].length == 0) return null;
+    return result[0][0];
   }
 
   static async findOneByEmail(email) {
-    if (email.length === 0) return;
-    return await db.execute('CALL USP_GetCustomerByEmail(?)',[email])
+    const [result] = await db.execute('CALL USP_GetCustomerByEmail(?)',[email]);
+    if (result[0].length == 0) return null;
+    return result[0][0];
   }
 
 }

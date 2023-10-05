@@ -17,6 +17,13 @@ exports.postSignUp = async (req, res, next) => {
     const email = req.body.email;
     const password = req.body.password;
 
+    const existingCustomer = await CustomerAccessor.findOneByEmail(email);
+    if (existingCustomer) {
+        return res.status(400).json({
+            message: "Email already exists"
+        });
+    }
+
     const custId = await CustomerAccessor.insert(name, segment, email, password)
     return res.status(200).json({
         message: "User registered successfully.",

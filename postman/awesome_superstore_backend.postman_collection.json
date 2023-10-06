@@ -41,7 +41,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "",
+					"raw": "{\n    \"email\": \"newcustomer@gmail.com\",\n    \"password\": \"verysecurepassword\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"

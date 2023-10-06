@@ -65,7 +65,12 @@ exports.postLogin = async (req, res, next) => {
     );
     return res.status(200).json({
         message: "Customer logged in successfully",
-        customer: customerFound,
+        customer: {
+            cust_id: customerFound.cust_id,
+            cust_name: customerFound.cust_name,
+            segment: customerFound.segment,
+            email: customerFound.email
+        },
         token: token
     })
 };

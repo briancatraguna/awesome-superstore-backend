@@ -9,6 +9,17 @@ const authRouter = require('./routes/auth');
 
 const app = express();
 
+//  CORS
+app.use((req, res, next) => {
+	res.setHeader("Access-Control-Allow-Origin", "*");
+	res.setHeader("Access-Control-Allow-Method", "GET,POST,PUT,PATCH,DELETE");
+	res.setHeader(
+		"Access-Control-Allow-Headers",
+		"Content-Type, Authorization"
+	);
+	next();
+});
+
 // global middleware
 app.use(bodyParser.json());
 

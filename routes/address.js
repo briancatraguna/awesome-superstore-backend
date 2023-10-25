@@ -30,4 +30,15 @@ router.get(
     addressController.getStates
 );
 
+router.get(
+    '/cities/:stateId',
+    isAuthenticated,
+    [
+        param('stateId')
+            .trim()
+            .isInt(),
+    ],
+    addressController.getCities
+)
+
 module.exports = router;

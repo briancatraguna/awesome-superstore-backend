@@ -3,6 +3,8 @@ const addressController = require('../controller/address');
 
 const router = express.Router();
 
-router.get('/regions', addressController.getRegions);
+const isAuthenticated = require("../middleware/is-auth");
+
+router.get('/regions', isAuthenticated, addressController.getRegions);
 
 module.exports = router;

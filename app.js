@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 
 // import routers
 const authRouter = require('./routes/auth');
+const addressRouter = require('./routes/address');
 
 const app = express();
 
@@ -25,6 +26,7 @@ app.use(bodyParser.json());
 
 // routers
 app.use('/auth', authRouter);
+app.use('/address', addressRouter);
 
 app.use((error, req, res, next) => {
   const statusCode = error.statusCode || 500;

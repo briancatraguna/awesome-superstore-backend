@@ -14,9 +14,14 @@ router.get(
 );
 
 router.get(
-    '/countries', 
+    '/countries/:regionId', 
     isAuthenticated, 
-    addressController.getCountries
+    [
+        param('regionId')
+            .trim()
+            .isInt(),
+    ],
+    addressController.getCountriesByRegion
 );
 
 router.get(
@@ -27,7 +32,7 @@ router.get(
             .trim()
             .isInt(),
     ],
-    addressController.getStates
+    addressController.getStatesByCountry
 );
 
 router.get(
@@ -38,7 +43,7 @@ router.get(
             .trim()
             .isInt(),
     ],
-    addressController.getCities
+    addressController.getCitiesByState
 )
 
 module.exports = router;

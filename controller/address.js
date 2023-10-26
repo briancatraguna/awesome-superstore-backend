@@ -10,12 +10,20 @@ exports.getRegions = async (req, res, next) => {
     return res.status(200).json(regions);
 }
 
-exports.getCountries = async (req, res, next) => {
-    const countries = await CountryAccessor.getAll();
+exports.getCountriesByRegion = async (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+		return res.status(400).json({
+            message: "Validation error",
+            errors: errors.array()
+        });
+	}
+    const regionId = req.params.regionId;
+    const countries = await CountryAccessor.getAllByRegion(regionId);
     return res.status(200).json(countries);
 }
 
-exports.getStates = async (req, res, next) => {
+exports.getStatesByCountry = async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
 		return res.status(400).json({
@@ -28,7 +36,7 @@ exports.getStates = async (req, res, next) => {
     return res.status(200).json(states);
 }
 
-exports.getCities = async (req, res, next) => {
+exports.getCitiesByState = async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
 		return res.status(400).json({

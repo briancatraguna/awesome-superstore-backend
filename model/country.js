@@ -2,9 +2,9 @@ const db = require('../database/database');
 
 class CountryAccessor {
 
-    static async getAll() {
-        const queryStr = 'CALL USP_GetAllCountries()';
-        const [result] = await db.query(queryStr);
+    static async getAllByRegion(regionId) {
+        const queryStr = 'CALL USP_GetAllCountriesByRegion(?)';
+        const [result] = await db.query(queryStr, [regionId]);
         return result[0];
     }
 }

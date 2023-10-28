@@ -5,9 +5,10 @@ const express = require("express");
 const bodyParser = require("body-parser");
 
 // import routers
-const authRouter = require("./routes/auth");
+const authRouter = require('./routes/auth');
+const addressRouter = require('./routes/address');
+const customerRouter = require('./routes/customer');
 const productRouter = require("./routes/product");
-const addressRouter = require("./routes/address");
 
 const app = express();
 
@@ -23,10 +24,10 @@ app.use((req, res, next) => {
 app.use(bodyParser.json());
 
 // routers
-app.use("/auth", authRouter);
-//products
-app.use("/products", productRouter);
-app.use("/address", addressRouter);
+app.use('/auth', authRouter);
+app.use('/address', addressRouter);
+app.use('/customer', customerRouter);
+app.use('/products', productRouter);
 
 app.use((error, req, res, next) => {
   const statusCode = error.statusCode || 500;

@@ -9,7 +9,6 @@ const authRouter = require('./routes/auth');
 const addressRouter = require('./routes/address');
 const customerRouter = require('./routes/customer');
 const productRouter = require("./routes/product");
-const addressRouter = require("./routes/address");
 
 const app = express();
 

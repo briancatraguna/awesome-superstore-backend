@@ -1,5 +1,5 @@
 const express = require('express');
-const { param } = require('express-validator');
+const { param, body } = require('express-validator');
 
 const addressController = require('../controller/address');
 
@@ -44,6 +44,51 @@ router.get(
             .isInt(),
     ],
     addressController.getCitiesByState
+)
+
+router.put(
+    '/',
+    isAuthenticated,
+    [
+        body('cityId')
+            .trim()
+            .isInt(),
+        body('postalCode')
+            .trim()
+            .isLength({max: 10}),
+        body('custId')
+            .trim()
+            .isLength({max:20})
+    ],
+    addressController.putAddress
+)
+
+router.get(
+    '/:custId',
+    isAuthenticated,
+    [
+        param('custId')
+            .trim()
+            .isInt()
+    ],
+    addressController.getAddressByCustomer
+)
+
+router.post(
+    '/',
+    isAuthenticated,
+    [
+        body('addressId')
+            .trim()
+            .isInt(),
+        body('cityId')
+            .trim()
+            .isInt(),
+        body('postalCode')
+            .trim()
+            .isLength({max: 10})
+    ],
+    addressController.postAddress
 )
 
 module.exports = router;

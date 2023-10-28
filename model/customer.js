@@ -14,14 +14,22 @@ class CustomerAccessor {
   }
 
   static async findOneById(customerId) {
-    const [result] = await db.execute('CALL USP_GetCustomerById(?)',[customerId]);
+    const queryStr = 'CALL USP_GetCustomerById(?)'
+    const [result] = await db.execute(queryStr,[customerId]);
     if (result[0].length == 0) return null;
     return result[0][0];
   }
 
   static async findOneByEmail(email) {
-    const [result] = await db.execute('CALL USP_GetCustomerByEmail(?)',[email]);
+    const queryStr = 'CALL USP_GetCustomerByEmail(?)';
+    const [result] = await db.execute(queryStr,[email]);
     if (result[0].length == 0) return null;
+    return result[0][0];
+  }
+
+  static async update(custId, custName, segment, email) {
+    const queryStr = 'CALL USP_UpdateCustomer(?,?,?,?)';
+    const [result] = await db.execute(queryStr, [custId, custName, segment, email]);
     return result[0][0];
   }
 

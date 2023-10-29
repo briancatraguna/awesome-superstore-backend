@@ -56,7 +56,7 @@ router.put(
         body('postalCode')
             .trim()
             .isLength({max: 10}),
-        body('custId')
+        body('customerId')
             .trim()
             .isLength({max:20})
     ],

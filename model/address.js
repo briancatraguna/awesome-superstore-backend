@@ -5,7 +5,7 @@ class AddressAccessor {
     static async insert(cityId, postalCode, custId) {
         const queryStr = 'CALL USP_UpsertAddress(?,?,?)';
         const result = await db.query(queryStr, [cityId, postalCode, custId]);
-        return result[0];
+        return result[0][0][0];
     }
 
     static async findAllByCustomer(custId) {

@@ -7,7 +7,7 @@ const CityAccessor = require('../model/city');
 const AddressAccessor = require('../model/address');
 
 exports.getRegions = async (req, res, next) => {
-    const regions = await RegionAccessor.getAll();
+    const regions = await RegionAccessor.findAll();
     return res.status(200).json(regions);
 }
 

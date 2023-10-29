@@ -30,7 +30,7 @@ class CustomerAccessor {
   static async update(custId, custName, segment, email) {
     const queryStr = 'CALL USP_UpdateCustomer(?,?,?,?)';
     const [result] = await db.execute(queryStr, [custId, custName, segment, email]);
-    return result[0][0];
+    return result;
   }
 
 }

@@ -13,7 +13,7 @@ router.post(
     [
         body('customerId')
             .trim()
-            .isInt(),
+            .isLength({max:20}),
         body('customerName')
             .trim()
             .isLength({max: 100}),

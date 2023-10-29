@@ -14,6 +14,6 @@ exports.postCustomer = async (req, res, next) => {
     const custName = req.body.customerName;
     const segment = req.body.segment;
     const email = req.body.email;
-    const newCustomer = new CustomerAccessor.update(custId, custName, segment, email);
+    const newCustomer = CustomerAccessor.update(custId, custName, segment, email);
     return res.status(200).json(newCustomer);
 }

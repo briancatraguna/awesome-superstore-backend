@@ -11,7 +11,7 @@ class AddressAccessor {
     static async findAllByCustomer(custId) {
         const queryStr = 'CALL USP_GetAddressByCustomer(?)';
         const result = await db.query(queryStr, [custId]);
-        return result[0];
+        return result[0][0];
     }
 
     static async update(addrId, cityId, postalCode) {

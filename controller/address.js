@@ -73,7 +73,7 @@ exports.getAddressByCustomer = async (req, res, next) => {
             errors: errors.array()
         });
     }
-    const custId = req.params.custId;
+    const custId = req.params.customerId;
     const address = await AddressAccessor.findAllByCustomer(custId);
     return res.status(200).json(address);
 }

@@ -64,12 +64,12 @@ router.put(
 )
 
 router.get(
-    '/:custId',
+    '/:customerId',
     isAuthenticated,
     [
-        param('custId')
+        param('customerId')
             .trim()
-            .isInt()
+            .isLength({max:20})
     ],
     addressController.getAddressByCustomer
 )

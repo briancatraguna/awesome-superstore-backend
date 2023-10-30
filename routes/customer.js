@@ -30,4 +30,15 @@ router.post(
     customerController.postCustomer
 )
 
+router.get(
+    '/:customerId',
+    isAuthenticated,
+    [
+        param('customerId')
+            .trim()
+            .isLength({max:20})
+    ],
+    customerController.getCustomerById
+)
+
 module.exports = router;

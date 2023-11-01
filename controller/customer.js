@@ -14,6 +14,12 @@ exports.postCustomer = async (req, res, next) => {
     const custName = req.body.customerName;
     const segment = req.body.segment;
     const email = req.body.email;
+    const customerFound = await CustomerAccessor.findOneByEmail(email);
+    if (customerFound) {
+        return res.status(400).json({
+            message: "Email already exists"
+        });
+    }
     const newCustomer = await CustomerAccessor.update(custId, custName, segment, email);
     return res.status(200).json(newCustomer);
 }

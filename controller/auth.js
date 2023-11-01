@@ -74,3 +74,16 @@ exports.postLogin = async (req, res, next) => {
         token: token
     })
 };
+
+exports.postSendOTP = async (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+		return res.status(400).json({
+            message: "Validation error",
+            errors: errors.array()
+        });
+	}
+    const customerId = req.params.customerId;
+    const result = await CustomerAccessor.setAndGetOTP(customerId);
+    return res.status(200).json(result);
+}

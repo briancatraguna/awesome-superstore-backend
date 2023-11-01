@@ -33,6 +33,12 @@ class CustomerAccessor {
     return result;
   }
 
+  static async setAndGetOTP(custId) {
+    const queryStr = 'CALL USP_SetAndGetOTPByCustomer(?)';
+    const [result] = await db.execute(queryStr, [custId]);
+    return result[0][0];
+  }
+
 }
 
 module.exports = CustomerAccessor;

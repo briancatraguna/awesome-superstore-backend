@@ -33,9 +33,9 @@ class CustomerAccessor {
     return result;
   }
 
-  static async setAndGetOTP(custId) {
-    const queryStr = 'CALL USP_SetAndGetOTPByCustomer(?)';
-    const [result] = await db.execute(queryStr, [custId]);
+  static async setAndGetOTP(email) {
+    const queryStr = 'CALL USP_SetAndGetOTPByEmail(?)';
+    const [result] = await db.execute(queryStr, [email]);
     return result[0][0];
   }
 

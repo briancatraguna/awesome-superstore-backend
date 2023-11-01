@@ -3,6 +3,7 @@ const { validationResult } = require('express-validator');
 const jwt = require('jsonwebtoken');
 
 const CustomerAccessor = require('../model/customer');
+const { transporter, constructOTPEmail } = require('../email/transporter');
 
 exports.postSignUp = async (req, res, next) => {
     const errors = validationResult(req);
@@ -83,7 +84,26 @@ exports.postSendOTP = async (req, res, next) => {
             errors: errors.array()
         });
 	}
-    const customerId = req.params.customerId;
-    const result = await CustomerAccessor.setAndGetOTP(customerId);
-    return res.status(200).json(result);
+    const email = req.params.email;
+    const customerFound = await CustomerAccessor.findOneByEmail(email);
+    if (!customerFound) {
+        return res.status(400).json({
+            message: "Email doesn't exist"
+        });
+    }
+    const result = await CustomerAccessor.setAndGetOTP(email);
+    const otpCode = result.otp_code;
+    transporter.sendMail(constructOTPEmail(otpCode, email), (err, info) => {
+        if (err) {
+            return res.status(400).json({
+                message: "OTP send failed"
+            });
+        }
+        else {
+            return res.status(200).json({
+                message: "OTP code sent successfully",
+                otpCode: otpCode
+            })
+        }
+     })
 }

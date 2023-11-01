@@ -1,5 +1,5 @@
 const express = require('express');
-const {body} = require('express-validator');
+const {body, param} = require('express-validator');
 
 const authController = require('../controller/auth');
 
@@ -42,5 +42,16 @@ router.post(
     ],
     authController.postLogin
 );
+
+router.post(
+    '/sendOTP/:email',
+    [
+        param('email')
+            .trim()
+            .isEmail()
+            .normalizeEmail(),
+    ],
+    authController.postSendOTP
+)
 
 module.exports = router;

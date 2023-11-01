@@ -23,7 +23,7 @@ class AddressAccessor {
     static async findOneById(addrId) {
         const queryStr = 'CALL USP_GetAddressById(?)';
         const result = await db.query(queryStr, [addrId]);
-        return result[0][0];
+        return result[0][0][0];
     }
 }
 

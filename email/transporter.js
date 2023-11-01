@@ -1,20 +1,23 @@
 const nodemailer = require('nodemailer');
 
-export const transporter = nodemailer.createTransport({
+const transporter = nodemailer.createTransport({
     port: 465,
     host: "smtp.gmail.com",
     auth: {
-        user: 'superstoreawesome@gmail.com',
-        pass: 'AwesomeSuperstore@1234',
+        user: process.env.EMAIL,
+        pass: process.env.EMAILPASSWORD,
     },
     secure: true,
 })
 
-export const constructOTPEmail = (otp, recipientEmail) => {
+
+const constructOTPEmail = (otp, recipientEmail) => {
     return {
-        from: 'superstoreawesomel@gmail.com',  // sender address
+        from: process.env.EMAIL,  // sender address
         to: recipientEmail,  
         subject: 'Your OTP Code',
-        text: `Your OTP Code is ${otp}`,
+        text: `Your OTP Code for Awesome Superstore is ${otp}`,
     }
 }
+
+module.exports = { transporter, constructOTPEmail };

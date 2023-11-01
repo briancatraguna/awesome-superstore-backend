@@ -19,6 +19,12 @@ class AddressAccessor {
         const result = await db.query(queryStr, [addrId, cityId, postalCode]);
         return result[0][0];
     }
+
+    static async findOneById(addrId) {
+        const queryStr = 'CALL USP_GetAddressById(?)';
+        const result = await db.query(queryStr, [addrId]);
+        return result[0][0];
+    }
 }
 
 module.exports = AddressAccessor;

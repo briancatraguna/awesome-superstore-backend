@@ -92,3 +92,16 @@ exports.postAddress = async (req, res, next) => {
     const newAddress = await AddressAccessor.update(addressId, cityId, postalCode);
     return res.status(200).json(newAddress);
 }
+
+exports.getAddressById = async (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({
+            message: "Validation error",
+            errors: errors.array()
+        });
+    }
+    const addressId = req.params.addressId;
+    const address = await AddressAccessor.findOneById(addressId);
+    return res.status(200).json(address);
+}

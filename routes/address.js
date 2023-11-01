@@ -8,14 +8,14 @@ const router = express.Router();
 const isAuthenticated = require("../middleware/is-auth");
 
 router.get(
-    '/regions', 
-    isAuthenticated, 
+    '/regions',
+    isAuthenticated,
     addressController.getRegions
 );
 
 router.get(
-    '/countries/:regionId', 
-    isAuthenticated, 
+    '/countries/:regionId',
+    isAuthenticated,
     [
         param('regionId')
             .trim()
@@ -26,7 +26,7 @@ router.get(
 
 router.get(
     '/states/:countryId',
-    isAuthenticated, 
+    isAuthenticated,
     [
         param('countryId')
             .trim()
@@ -55,10 +55,10 @@ router.put(
             .isInt(),
         body('postalCode')
             .trim()
-            .isLength({max: 10}),
+            .isLength({ max: 10 }),
         body('customerId')
             .trim()
-            .isLength({max:20})
+            .isLength({ max: 20 })
     ],
     addressController.putAddress
 )
@@ -69,7 +69,7 @@ router.get(
     [
         param('customerId')
             .trim()
-            .isLength({max:20})
+            .isLength({ max: 20 })
     ],
     addressController.getAddressByCustomer
 )
@@ -86,9 +86,20 @@ router.post(
             .isInt(),
         body('postalCode')
             .trim()
-            .isLength({max: 10})
+            .isLength({ max: 10 })
     ],
     addressController.postAddress
+)
+
+router.get(
+    '/id/:addressId',
+    isAuthenticated,
+    [
+        param('addressId')
+            .trim()
+            .isInt()
+    ],
+    addressController.getAddressById
 )
 
 module.exports = router;

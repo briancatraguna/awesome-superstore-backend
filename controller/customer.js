@@ -11,19 +11,19 @@ exports.postCustomer = async (req, res, next) => {
         });
     }
     const custId = req.body.customerId;
-    const custName = req.body.customerName;
-    const segment = req.body.segment;
-    const email = req.body.email;
-    const customerFound = await CustomerAccessor.findOneByEmail(email);
-    if (customerFound) {
-        return res.status(400).json({
-            message: "Email already exists"
-        });
-    }
     const currentCustomer = await CustomerAccessor.findOneById(custId);
     if (!currentCustomer) {
         return res.status(400).json({
             message: "Customer ID doesn't exist"
+        });
+    }
+    const custName = req.body.customerName;
+    const segment = req.body.segment;
+    const email = req.body.email;
+    const customerFound = await CustomerAccessor.findOneByEmail(email);
+    if (customerFound && customerFound.email != currentCustomer.email) {
+        return res.status(400).json({
+            message: "Email already exists"
         });
     }
     const newCustomer = await CustomerAccessor.update(custId, custName, segment, email, currentCustomer.password);

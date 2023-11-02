@@ -20,7 +20,13 @@ exports.postCustomer = async (req, res, next) => {
             message: "Email already exists"
         });
     }
-    const newCustomer = await CustomerAccessor.update(custId, custName, segment, email);
+    const currentCustomer = await CustomerAccessor.findOneById(custId);
+    if (!currentCustomer) {
+        return res.status(400).json({
+            message: "Customer ID doesn't exist"
+        });
+    }
+    const newCustomer = await CustomerAccessor.update(custId, custName, segment, email, currentCustomer.password);
     return res.status(200).json(newCustomer);
 }
 

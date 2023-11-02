@@ -27,10 +27,10 @@ class CustomerAccessor {
     return result[0][0];
   }
 
-  static async update(custId, custName, segment, email) {
-    const queryStr = 'CALL USP_UpdateCustomer(?,?,?,?)';
-    const [result] = await db.execute(queryStr, [custId, custName, segment, email]);
-    return result;
+  static async update(custId, custName, segment, email, password) {
+    const queryStr = 'CALL USP_UpdateCustomer(?,?,?,?,?)';
+    const [result] = await db.execute(queryStr, [custId, custName, segment, email, password]);
+    return result[0][0];
   }
 
   static async setAndGetOTP(email) {

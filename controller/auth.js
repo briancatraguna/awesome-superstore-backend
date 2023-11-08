@@ -188,5 +188,7 @@ exports.postChangePasswordByEmail = async (req, res, next) => {
     const saltRounds = 12;
     const hashedPassword = await bcrypt.hash(password, saltRounds)
     const newCustomer = await CustomerAccessor.update(currentCustomer.cust_id, currentCustomer.cust_name, currentCustomer.segment, currentCustomer.email, hashedPassword);
-    return res.status(200).json(newCustomer)
+    return res.status(200).json({
+        message: "Password changed successfully"
+    })
 }

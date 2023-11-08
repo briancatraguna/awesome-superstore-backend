@@ -92,4 +92,23 @@ router.post(
     authController.postCheckOTPByEmail
 )
 
+router.post(
+    '/forgotPassword/change',
+    [
+        body('email')
+            .trim()
+            .isEmail()
+            .normalizeEmail(),
+        body('password')
+            .trim()
+            .isLength({ min: 5 })
+            .withMessage('Weak password'),
+        body('confirmPassword')
+            .trim()
+            .isLength({ min: 5 })
+            .withMessage('Weak password')
+    ],
+    authController.postChangePasswordByEmail
+)
+
 module.exports = router;

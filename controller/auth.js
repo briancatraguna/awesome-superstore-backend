@@ -162,3 +162,31 @@ exports.postCheckOTPByEmail = async (req, res, next) => {
         })
     }
 }
+
+exports.postChangePasswordByEmail = async (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+		return res.status(400).json({
+            message: "Validation error",
+            errors: errors.array()
+        });
+	}
+    const email = req.body.email;
+    const password = req.body.password;
+    const confirmPassword = req.body.confirmPassword;
+    const currentCustomer = await CustomerAccessor.findOneByEmail(email);
+    if (!currentCustomer) {
+        return res.status(400).json({
+            message: "Can't find email"
+        })
+    }
+    if (password !== confirmPassword) {
+        return res.status(400).json({
+            message: "Password doesn't match!"
+        })
+    }
+    const saltRounds = 12;
+    const hashedPassword = await bcrypt.hash(password, saltRounds)
+    const newCustomer = await CustomerAccessor.update(currentCustomer.cust_id, currentCustomer.cust_name, currentCustomer.segment, currentCustomer.email, hashedPassword);
+    return res.status(200).json(newCustomer)
+}

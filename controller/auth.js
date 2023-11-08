@@ -140,3 +140,25 @@ exports.postPasswordByCustId = async (req, res, next) => {
     const newCustomer = await CustomerAccessor.update(customerId, currentCustomer.cust_name, currentCustomer.segment, currentCustomer.email, hashedPassword);
     return res.status(200).json(newCustomer);
 }
+
+exports.postCheckOTPByEmail = async (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+		return res.status(400).json({
+            message: "Validation error",
+            errors: errors.array()
+        });
+	}
+    const email = req.body.email;
+    const otpCode = req.body.otpCode;
+    const customerFound = await CustomerAccessor.findOneByEmail(email);
+    if (otpCode !== customerFound.otp_code) {
+        return res.status(400).json({
+            message: "OTP code doesn't match!"
+        })
+    } else {
+        return res.status(200).json({
+            message: "OTP matched successfully"
+        })
+    }
+}

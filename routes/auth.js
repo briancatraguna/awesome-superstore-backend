@@ -78,4 +78,18 @@ router.post(
     authController.postPasswordByCustId
 )
 
+router.post(
+    '/forgotPassword/validateOTP',
+    [
+        body('email')
+            .trim()
+            .isEmail()
+            .normalizeEmail(),
+        body('otpCode')
+            .trim()
+            .isLength({ max: 5 })
+    ],
+    authController.postCheckOTPByEmail
+)
+
 module.exports = router;

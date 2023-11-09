@@ -9,6 +9,7 @@ class ProductAccessor {
                 as product_id,
             p.product_name 
                 as product_name,
+            p.unit_price as price,
             case when p.market = 1 then 'USCA'
                 when p.market = 2 then 'Asia Pacific'
                 when p.market = 3 then 'Europe'

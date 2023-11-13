@@ -30,26 +30,12 @@ class ProductAccessor {
     return result;
   }
 
-  // static async insert(name, segment, email, password) {
-  //   const queryStr = 'CALL USP_UpsertCustomer(?,?,?,?)';
-  //   const [result] = await db.query(queryStr, [
-  //     name,
-  //     segment,
-  //     email,
-  //     password
-  //   ]);
-  //   return result[0][0].cust_id;
-  // }
-  // static async findOneById(customerId) {
-  //   const [result] = await db.execute('CALL USP_GetCustomerById(?)',[customerId]);
-  //   if (result[0].length == 0) return null;
-  //   return result[0][0];
-  // }
-  // static async findOneByEmail(email) {
-  //   const [result] = await db.execute('CALL USP_GetCustomerByEmail(?)',[email]);
-  //   if (result[0].length == 0) return null;
-  //   return result[0][0];
-  // }
+  static async insert(productName, unitPrice, market, subcategoryId){
+    const queryStr = 'CALL USP_UpsertProduct(?,?,?,?)';
+    const result = await db.query(queryStr, [productName, unitPrice, market, subcategoryId]);
+    return result[0][0][0];
+  }
+
 }
 
 module.exports = ProductAccessor;

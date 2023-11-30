@@ -29,3 +29,17 @@ exports.insertOrders = async (req, res, next) => {
   );
   return res.status(200).json({ message: "Succesfully placed orders " });
 };
+
+exports.getOrdersByCustomerAndReturned = async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({
+      message: "Validation error",
+      errors: errors.array(),
+    });
+  }
+  const customerId = req.query.customerId;
+  const isReturned = req.query.isReturned;
+  const orders = await OrdersAccessor.findAllByCustomerAndReturned(customerId, isReturned);
+  return res.status(200).json(orders);
+}

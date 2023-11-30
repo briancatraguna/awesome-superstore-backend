@@ -16,8 +16,13 @@ class OrdersAccessor {
       in_ship_mode,
       in_ship_date,
     ]);
-    console.log(result);
     return result;
+  }
+
+  static async findAllByCustomerAndReturned(customerId, isReturned) {
+    const queryStr = 'CALL USP_GetOrdersByCustomer(?,?)';
+    const [result] = await db.execute(queryStr, [customerId, isReturned]);
+    return result[0];
   }
 }
 

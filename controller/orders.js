@@ -43,3 +43,18 @@ exports.getOrdersByCustomerAndReturned = async (req, res, next) => {
   const orders = await OrdersAccessor.findAllByCustomerAndReturned(customerId, isReturned);
   return res.status(200).json(orders);
 }
+
+exports.postOrderReturnedByCustomer = async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({
+      message: "Validation error",
+      errors: errors.array(),
+    });
+  }
+  const orderId = req.params.orderId;
+  const newOrder = await OrdersAccessor.updateToReturnedByCustomer(orderId);
+  return res.status(200).json({
+    message: "Order is returned successfully"
+  });
+}

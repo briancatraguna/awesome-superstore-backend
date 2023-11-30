@@ -24,6 +24,12 @@ class OrdersAccessor {
     const [result] = await db.execute(queryStr, [customerId, isReturned]);
     return result[0];
   }
+
+  static async updateToReturnedByCustomer(orderId) {
+    const queryStr = 'CALL USP_ReturnOrder(?)';
+    const [result] = await db.query(queryStr, [orderId]);
+    return result[0];
+  }
 }
 
 module.exports = OrdersAccessor;

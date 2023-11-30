@@ -1,5 +1,5 @@
 const express = require("express");
-const { query } = require("express-validator");
+const { query, param} = require("express-validator");
 
 const orderController = require("../controller/orders");
 
@@ -20,6 +20,17 @@ router.get(
             .isBoolean()
     ],
     orderController.getOrdersByCustomerAndReturned
+)
+
+router.post(
+    '/return/:orderId',
+    isAuthenticated,
+    [
+        param('orderId')
+            .trim()
+            .isLength({max:40})
+    ],
+    orderController.postOrderReturnedByCustomer
 )
 
 module.exports = router;

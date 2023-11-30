@@ -33,4 +33,15 @@ router.post(
     orderController.postOrderReturnedByCustomer
 )
 
+router.get(
+    '/details/:orderId',
+    isAuthenticated,
+    [
+        param('orderId')
+            .trim()
+            .isLength({max:40})
+    ],
+    orderController.getOrderDetails
+)
+
 module.exports = router;

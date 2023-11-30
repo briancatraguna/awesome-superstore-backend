@@ -30,6 +30,12 @@ class OrdersAccessor {
     const [result] = await db.query(queryStr, [orderId]);
     return result[0];
   }
+
+  static async getOrderDetails(orderId) {
+    const queryStr = 'CALL USP_GetOrderProd(?)';
+    const [result] = await db.query(queryStr, [orderId]);
+    return result[0];
+  }
 }
 
 module.exports = OrdersAccessor;

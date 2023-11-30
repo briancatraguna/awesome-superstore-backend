@@ -58,3 +58,16 @@ exports.postOrderReturnedByCustomer = async (req, res, next) => {
     message: "Order is returned successfully"
   });
 }
+
+exports.getOrderDetails = async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({
+      message: "Validation error",
+      errors: errors.array(),
+    });
+  }
+  const orderId = req.params.orderId;
+  const orderDetail = await OrdersAccessor.getOrderDetails(orderId);
+  return res.status(200).json(orderDetail);
+}

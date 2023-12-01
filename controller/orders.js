@@ -18,7 +18,6 @@ exports.insertOrders = async (req, res, next) => {
     .toISOString()
     .slice(0, 19)
     .replace("T", " ");
-  console.log(in_ship_date);
 
   const result = await OrdersAccessor.insertOrderDetails(
     JSON.stringify(orderProductJSON),

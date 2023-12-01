@@ -21,7 +21,6 @@ exports.findAllProducts = async (req, res, next) => {
       products: allProducts,
     });
   } catch (e) {
-    console.log(e);
     res.status(400).json({
       message: "Error",
       errors: e,
